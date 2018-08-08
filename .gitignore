@@ -1,0 +1,7 @@
+# IDE
+.vscode
+
+# create-react-app
+client/node_modules
+client/.gitignore
+client/README.md
