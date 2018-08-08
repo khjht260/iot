@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 
 
+// const payload = {
+//   username: "khjht260",
+//   password: "650103"
+// }
 const payload = {
-  username: "khjht260",
-  password: "650103"
+  username: "1051516",
+  password: "khjh25263"
 }
 
 class SignInComp extends Component {

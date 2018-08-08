@@ -3,15 +3,18 @@ import React, { Component } from 'react';
 
 class SignInComp extends Component {
   render() {
+    const credits = this.props.data.num_progress - this.props.data.num_spent
     if (!this.props.permission) return <div></div>
     return (
       <div>
-        <h3> credits: {this.props.data.credits}</h3>
-
+        <h3> {this.props.data.username} </h3>
+        <h3> progress: {this.props.data.num_progress} </h3>
+        <h3> spent   : {this.props.data.num_spent} </h3>
+        <h3> credits : {credits}</h3>
         <button 
           id="activateBtn"
           onClick={this.props.handleActivate}
-          disabled={!this.props.data.credits > 0}
+          disabled={!credits > 0}
         > ACTIVATE </button>
 
         <button

@@ -18,6 +18,11 @@ WebHandler = MoodleHandler()
 
 activate = app.route('/activate')(activate)
 
+@app.route('/set_db', methods=['POST'])
+def set_db():
+    data = request.get_json()
+    WebHandler.set_db(key=data['username'], val=data['set_num'])
+    return "True"
 
 @app.route('/checkAuth', methods=['POST'])
 def checkAuth():

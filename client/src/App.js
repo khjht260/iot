@@ -10,8 +10,9 @@ import './App.css';
 class App extends Component {
   state = {
     permission: false,
-    credits: null,
-    data: null,
+    num_progress: null,
+    num_spent: null,
+    username: null,
   }
 
   handleSignIn = async () => {
@@ -28,7 +29,10 @@ class App extends Component {
       alert('permission denied')
       return
     }
-    this.setState(authStatus)
+    this.setState({
+      username: usernameInput.value,
+      ...authStatus,
+    })
   }
   checkAuth = (payload) => {
     return fetch('http://localhost:5000/checkAuth', {
@@ -42,7 +46,18 @@ class App extends Component {
     .then(res => res.json())
   }
   handleActivate = () => {
-    fetch('http://localhost:5000/activate')
+    fetch('http://localhost:5000/set_db', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.username, 
+        set_num: this.state.num_spent + 1,
+      }),
+    })
+    .then(fetch('http://localhost:5000/activate'))
     this.handleSignOut()
   }
   handleSignOut = () => {

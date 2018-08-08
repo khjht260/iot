@@ -1,7 +1,9 @@
 ## coding=utf-8
+import pandas as pd
+import redis
 
 import requests
-import pandas as pd
+import io
 
 
 class MoodleHandler():
@@ -11,9 +13,18 @@ class MoodleHandler():
         'password': '650103',
     }
     course_num = '196'
+    frontend_server_ip = '192.168.43.34'
+    frontend_server_port = 6379
+
     VALID_ELEMENTS = ["已經完成", "已經完成(及格)"]
     def __init__(self):
-        pass
+        self.conn = redis.StrictRedis(
+            host=MoodleHandler.frontend_server_ip,
+            port=MoodleHandler.frontend_server_port,  
+        )
+
+    def set_db(self, key, val):
+        self.conn.set(key, val)
 
     def checkAuth(self, data):
         rs = requests.session()
@@ -35,17 +46,19 @@ class MoodleHandler():
         user_id = data['username']
         user_id=''.join(i for i in user_id if i.isdigit())
         num_progress = self._get_progress_num()
-        return {"credits": num_progress[user_id]}
+        num_spent = self._get_spent_num(user_id)
+        return {
+            "num_progress": num_progress[user_id],
+            "num_spent": num_spent,
+        }
     
     def _get_progress_num(self):
         rs = requests.session()
         res = rs.post(MoodleHandler.base_url+"/login/index.php", data=MoodleHandler.teacher_credentials)
-        report1 = rs.get(MoodleHandler.base_url+"/report/progress/index.php?course="+MoodleHandler.course_num+"&format=csv")
+        report = rs.get(MoodleHandler.base_url+"/report/progress/index.php?course="+MoodleHandler.course_num+"&format=csv")
+        report_file = io.StringIO(report.text)
 
-        with open('moodle_data.csv', 'w+', encoding='utf-8') as file:
-            file.write(report1.text)
-
-        data = pd.read_csv('moodle_data.csv', index_col=0, encoding='utf-8')
+        data = pd.read_csv(report_file, index_col=0, encoding='utf-8')
         data = data.to_dict('index')
 
         stats = {}
@@ -57,6 +70,15 @@ class MoodleHandler():
 
         stats['260'] = 13
         return stats
+
+    def _get_spent_num(self, user_id):
+        print('user_id: ', user_id)
+        num_spent = self.conn.get(user_id)
+        if num_spent is None:
+            num_spent = 0
+        else:
+            num_spent = int(num_spent)
+        return num_spent
 
     @staticmethod
     def get_count(arr_score):
