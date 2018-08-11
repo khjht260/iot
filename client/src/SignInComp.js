@@ -15,21 +15,21 @@ class SignInComp extends Component {
     if (this.props.permission) return <div></div>
     return (
       <div>
-        <input 
+        <input class="css-input"
           id="username-input" 
-          placeholder="username"
+          placeholder="帳號：例如1072003"
           autoFocus
           defaultValue={payload.username}
         />
-        <input
+        <input class="css-input"
           type="password" 
           id="password-input"
-          placeholder="password" 
+          placeholder="密碼：khjh加身分證末五碼" 
           defaultValue={payload.password}
         />
-        <button 
+        <button className="myButton"
           onClick={this.props.handleSignIn} 
-        > SIGN IN </button>
+        > 確認 </button>
       </div>
     );
   }

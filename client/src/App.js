@@ -5,7 +5,7 @@ import UserInfoComp from './UserInfoComp'
 
 import logo from './logo.svg';
 import './App.css';
-
+import './style.css';
 
 class App extends Component {
   state = {
@@ -26,7 +26,7 @@ class App extends Component {
     const authStatus = await this.checkAuth(payload)
     console.log(authStatus)
     if (!authStatus.permission) {
-      alert('permission denied')
+      alert('帳號或密碼錯誤，請重新輸入')
       return
     }
     this.setState({
@@ -68,9 +68,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
+          <h1 className="App-title"><img src={logo} className="App-logo" alt="logo" />學霸幣兌換系統<img src={logo} className="App-logo" alt="logo" /></h1>
+               
+</header>
         
         <SignInComp 
           permission={this.state.permission}
