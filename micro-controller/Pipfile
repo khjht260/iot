@@ -9,6 +9,7 @@ flask = "*"
 flask-cors = "*"
 requests = "*"
 pandas = "*"
+"rpi.gpio" = "*"
 
 [dev-packages]
 

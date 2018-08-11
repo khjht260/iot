@@ -5,3 +5,10 @@
 client/node_modules
 client/.gitignore
 client/README.md
+
+# python
+micro-controller/__pycache__
+
+
+# credentials
+micro-controller/settings.py

@@ -5,6 +5,7 @@ import redis
 import requests
 import io
 
+from settings import db_settings
 
 class MoodleHandler():
     base_url = "http://ido.khjh.hc.edu.tw/moodle"
@@ -13,14 +14,16 @@ class MoodleHandler():
         'password': '650103',
     }
     course_num = '196'
-    frontend_server_ip = '192.168.43.34'
-    frontend_server_port = 6379
+    database_ip = db_settings['db_ip']
+    database_port = db_settings['db_port']
+    database_password = db_settings['db_password']
 
     VALID_ELEMENTS = ["已經完成", "已經完成(及格)"]
     def __init__(self):
         self.conn = redis.StrictRedis(
-            host=MoodleHandler.frontend_server_ip,
-            port=MoodleHandler.frontend_server_port,  
+            host=MoodleHandler.database_ip,
+            port=MoodleHandler.database_port,
+            password=MoodleHandler.database_password,
         )
 
     def set_db(self, key, val):
