@@ -68,9 +68,20 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title"><img src={logo} className="App-logo" alt="logo" />學霸幣兌換系統<img src={logo} className="App-logo" alt="logo" /></h1>
-               
-</header>
+          <h1 className="App-title">
+            <img 
+              src={logo} 
+              className="App-logo" 
+              alt="logo" 
+            />
+            學霸幣兌換系統
+            <img 
+              src={logo} 
+              className="App-logo" 
+              alt="logo" 
+            />
+          </h1>     
+        </header>
         
         <SignInComp 
           permission={this.state.permission}

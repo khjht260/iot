@@ -72,6 +72,7 @@ class MoodleHandler():
             stats[student_id] = count
 
         stats['260'] = 13
+        print('done getting progress num')
         return stats
 
     def _get_spent_num(self, user_id):

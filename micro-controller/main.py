@@ -7,7 +7,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from moodle_handler import MoodleHandler 
-from basketball_machine import activate
+# from basketball_machine import activate
+activate = None
 from utils import merge_two_dicts
 
 
@@ -16,7 +17,8 @@ CORS(app)
 
 WebHandler = MoodleHandler()
 
-activate = app.route('/activate')(activate)
+if activate is not None:
+    activate = app.route('/activate')(activate)
 
 @app.route('/set_db', methods=['POST'])
 def set_db():
