@@ -40,8 +40,6 @@ class MoodleHandler():
             MoodleHandler.base_url + "/login/index.php", 
             data=data
         )
-        print(len(false_res.content))
-        print(len(real_res.content))
         return len(real_res.content) > len(false_res.content) * 1.1
 
     def getUserInfo(self, data):
@@ -76,7 +74,6 @@ class MoodleHandler():
         return stats
 
     def _get_spent_num(self, user_id):
-        print('user_id: ', user_id)
         num_spent = self.conn.get(user_id)
         if num_spent is None:
             num_spent = 0

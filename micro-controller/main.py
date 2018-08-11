@@ -1,4 +1,8 @@
 ## coding=utf-8
+from settings import parser
+args = parser.parse_args()
+print(args)
+
 import sys
 print(sys.version)
 import json
@@ -7,8 +11,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from moodle_handler import MoodleHandler 
-# from basketball_machine import activate
-activate = None
+if not args.on_pc:
+    from basketball_machine import activate
 from utils import merge_two_dicts
 
 
@@ -17,7 +21,7 @@ CORS(app)
 
 WebHandler = MoodleHandler()
 
-if activate is not None:
+if not args.on_pc:
     activate = app.route('/activate')(activate)
 
 @app.route('/set_db', methods=['POST'])
